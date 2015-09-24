@@ -7,7 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F989237A1BB3AD9500D2B158 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = F98923791BB3AD9500D2B158 /* main.c */; };
+		F98923AD1BB3AE5200D2B158 /* content.c in Sources */ = {isa = PBXBuildFile; fileRef = F98923801BB3ADD100D2B158 /* content.c */; };
+		F98923AE1BB3AE5200D2B158 /* content.h in Sources */ = {isa = PBXBuildFile; fileRef = F98923811BB3ADD100D2B158 /* content.h */; };
+		F98923AF1BB3AE5200D2B158 /* gfserver_main.c in Sources */ = {isa = PBXBuildFile; fileRef = F989238C1BB3ADD100D2B158 /* gfserver_main.c */; };
+		F98923B01BB3AE5200D2B158 /* gfserver.c in Sources */ = {isa = PBXBuildFile; fileRef = F989238D1BB3ADD100D2B158 /* gfserver.c */; };
+		F98923B11BB3AE5200D2B158 /* gfserver.h in Sources */ = {isa = PBXBuildFile; fileRef = F989238E1BB3ADD100D2B158 /* gfserver.h */; };
+		F98923B21BB3AE5200D2B158 /* handler.c in Sources */ = {isa = PBXBuildFile; fileRef = F989238F1BB3ADD100D2B158 /* handler.c */; };
+		F98923BE1BB3AF1500D2B158 /* gfclient_download.c in Sources */ = {isa = PBXBuildFile; fileRef = F98923891BB3ADD100D2B158 /* gfclient_download.c */; };
+		F98923BF1BB3AF1500D2B158 /* gfclient.c in Sources */ = {isa = PBXBuildFile; fileRef = F989238A1BB3ADD100D2B158 /* gfclient.c */; };
+		F98923C01BB3AF1500D2B158 /* gfclient.h in Sources */ = {isa = PBXBuildFile; fileRef = F989238B1BB3ADD100D2B158 /* gfclient.h */; };
+		F98923C11BB3AF1500D2B158 /* workload.c in Sources */ = {isa = PBXBuildFile; fileRef = F989239F1BB3ADD100D2B158 /* workload.c */; };
+		F98923C21BB3AF1500D2B158 /* workload.h in Sources */ = {isa = PBXBuildFile; fileRef = F98923A01BB3ADD100D2B158 /* workload.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,15 +30,75 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		F98923A41BB3ADFA00D2B158 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		F98923B51BB3AEF300D2B158 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		F98923761BB3AD9500D2B158 /* Project1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Project1; sourceTree = BUILT_PRODUCTS_DIR; };
-		F98923791BB3AD9500D2B158 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		F98923801BB3ADD100D2B158 /* content.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = content.c; sourceTree = "<group>"; };
+		F98923811BB3ADD100D2B158 /* content.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = content.h; sourceTree = "<group>"; };
+		F98923821BB3ADD100D2B158 /* content.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = content.txt; sourceTree = "<group>"; };
+		F98923861BB3ADD100D2B158 /* paraglider.jpg-000000 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "paraglider.jpg-000000"; sourceTree = "<group>"; };
+		F98923871BB3ADD100D2B158 /* random.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = random.txt; sourceTree = "<group>"; };
+		F98923881BB3ADD100D2B158 /* road.jpg-000000 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "road.jpg-000000"; sourceTree = "<group>"; };
+		F98923891BB3ADD100D2B158 /* gfclient_download.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = gfclient_download.c; sourceTree = "<group>"; };
+		F989238A1BB3ADD100D2B158 /* gfclient.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = gfclient.c; sourceTree = "<group>"; };
+		F989238B1BB3ADD100D2B158 /* gfclient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gfclient.h; sourceTree = "<group>"; };
+		F989238C1BB3ADD100D2B158 /* gfserver_main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = gfserver_main.c; sourceTree = "<group>"; };
+		F989238D1BB3ADD100D2B158 /* gfserver.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = gfserver.c; sourceTree = "<group>"; };
+		F989238E1BB3ADD100D2B158 /* gfserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gfserver.h; sourceTree = "<group>"; };
+		F989238F1BB3ADD100D2B158 /* handler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = handler.c; sourceTree = "<group>"; };
+		F98923901BB3ADD100D2B158 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		F98923951BB3ADD100D2B158 /* 1kb-sample-file-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1kb-sample-file-0.png"; sourceTree = "<group>"; };
+		F98923961BB3ADD100D2B158 /* 1kb-sample-file-1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "1kb-sample-file-1.html"; sourceTree = "<group>"; };
+		F98923971BB3ADD100D2B158 /* 1kb-sample-file-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1kb-sample-file-2.png"; sourceTree = "<group>"; };
+		F98923981BB3ADD100D2B158 /* 1kb-sample-file-3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "1kb-sample-file-3.jpg"; sourceTree = "<group>"; };
+		F98923991BB3ADD100D2B158 /* 1kb-sample-file-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1kb-sample-file-4.png"; sourceTree = "<group>"; };
+		F989239A1BB3ADD100D2B158 /* moranabovejacksonlake.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = moranabovejacksonlake.jpg; sourceTree = "<group>"; };
+		F989239B1BB3ADD100D2B158 /* paraglider.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = paraglider.jpg; sourceTree = "<group>"; };
+		F989239C1BB3ADD100D2B158 /* random.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = random.txt; sourceTree = "<group>"; };
+		F989239D1BB3ADD100D2B158 /* road.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = road.jpg; sourceTree = "<group>"; };
+		F989239E1BB3ADD100D2B158 /* yellowstone.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yellowstone.jpg; sourceTree = "<group>"; };
+		F989239F1BB3ADD100D2B158 /* workload.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = workload.c; sourceTree = "<group>"; };
+		F98923A01BB3ADD100D2B158 /* workload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = workload.h; sourceTree = "<group>"; };
+		F98923A11BB3ADD100D2B158 /* workload.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = workload.txt; sourceTree = "<group>"; };
+		F98923A61BB3ADFA00D2B158 /* gfserver_main */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gfserver_main; sourceTree = BUILT_PRODUCTS_DIR; };
+		F98923B71BB3AEF300D2B158 /* gfclient */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gfclient; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F98923731BB3AD9500D2B158 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F98923A31BB3ADFA00D2B158 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F98923B41BB3AEF300D2B158 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -41,7 +111,22 @@
 		F989236D1BB3AD9500D2B158 = {
 			isa = PBXGroup;
 			children = (
-				F98923781BB3AD9500D2B158 /* Project1 */,
+				F98923801BB3ADD100D2B158 /* content.c */,
+				F98923811BB3ADD100D2B158 /* content.h */,
+				F98923821BB3ADD100D2B158 /* content.txt */,
+				F98923831BB3ADD100D2B158 /* courses */,
+				F98923891BB3ADD100D2B158 /* gfclient_download.c */,
+				F989238A1BB3ADD100D2B158 /* gfclient.c */,
+				F989238B1BB3ADD100D2B158 /* gfclient.h */,
+				F989238C1BB3ADD100D2B158 /* gfserver_main.c */,
+				F989238D1BB3ADD100D2B158 /* gfserver.c */,
+				F989238E1BB3ADD100D2B158 /* gfserver.h */,
+				F989238F1BB3ADD100D2B158 /* handler.c */,
+				F98923901BB3ADD100D2B158 /* Makefile */,
+				F98923911BB3ADD100D2B158 /* server_root */,
+				F989239F1BB3ADD100D2B158 /* workload.c */,
+				F98923A01BB3ADD100D2B158 /* workload.h */,
+				F98923A11BB3ADD100D2B158 /* workload.txt */,
 				F98923771BB3AD9500D2B158 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,16 +135,77 @@
 			isa = PBXGroup;
 			children = (
 				F98923761BB3AD9500D2B158 /* Project1 */,
+				F98923A61BB3ADFA00D2B158 /* gfserver_main */,
+				F98923B71BB3AEF300D2B158 /* gfclient */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F98923781BB3AD9500D2B158 /* Project1 */ = {
+		F98923831BB3ADD100D2B158 /* courses */ = {
 			isa = PBXGroup;
 			children = (
-				F98923791BB3AD9500D2B158 /* main.c */,
+				F98923841BB3ADD100D2B158 /* ud923 */,
 			);
-			path = Project1;
+			path = courses;
+			sourceTree = "<group>";
+		};
+		F98923841BB3ADD100D2B158 /* ud923 */ = {
+			isa = PBXGroup;
+			children = (
+				F98923851BB3ADD100D2B158 /* filecorpus */,
+			);
+			path = ud923;
+			sourceTree = "<group>";
+		};
+		F98923851BB3ADD100D2B158 /* filecorpus */ = {
+			isa = PBXGroup;
+			children = (
+				F98923861BB3ADD100D2B158 /* paraglider.jpg-000000 */,
+				F98923871BB3ADD100D2B158 /* random.txt */,
+				F98923881BB3ADD100D2B158 /* road.jpg-000000 */,
+			);
+			path = filecorpus;
+			sourceTree = "<group>";
+		};
+		F98923911BB3ADD100D2B158 /* server_root */ = {
+			isa = PBXGroup;
+			children = (
+				F98923921BB3ADD100D2B158 /* courses */,
+			);
+			path = server_root;
+			sourceTree = "<group>";
+		};
+		F98923921BB3ADD100D2B158 /* courses */ = {
+			isa = PBXGroup;
+			children = (
+				F98923931BB3ADD100D2B158 /* ud923 */,
+			);
+			path = courses;
+			sourceTree = "<group>";
+		};
+		F98923931BB3ADD100D2B158 /* ud923 */ = {
+			isa = PBXGroup;
+			children = (
+				F98923941BB3ADD100D2B158 /* filecorpus */,
+			);
+			path = ud923;
+			sourceTree = "<group>";
+		};
+		F98923941BB3ADD100D2B158 /* filecorpus */ = {
+			isa = PBXGroup;
+			children = (
+				F98923951BB3ADD100D2B158 /* 1kb-sample-file-0.png */,
+				F98923961BB3ADD100D2B158 /* 1kb-sample-file-1.html */,
+				F98923971BB3ADD100D2B158 /* 1kb-sample-file-2.png */,
+				F98923981BB3ADD100D2B158 /* 1kb-sample-file-3.jpg */,
+				F98923991BB3ADD100D2B158 /* 1kb-sample-file-4.png */,
+				F989239A1BB3ADD100D2B158 /* moranabovejacksonlake.jpg */,
+				F989239B1BB3ADD100D2B158 /* paraglider.jpg */,
+				F989239C1BB3ADD100D2B158 /* random.txt */,
+				F989239D1BB3ADD100D2B158 /* road.jpg */,
+				F989239E1BB3ADD100D2B158 /* yellowstone.jpg */,
+			);
+			path = filecorpus;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,6 +228,40 @@
 			productReference = F98923761BB3AD9500D2B158 /* Project1 */;
 			productType = "com.apple.product-type.tool";
 		};
+		F98923A51BB3ADFA00D2B158 /* gfserver_main */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F98923AA1BB3ADFA00D2B158 /* Build configuration list for PBXNativeTarget "gfserver_main" */;
+			buildPhases = (
+				F98923A21BB3ADFA00D2B158 /* Sources */,
+				F98923A31BB3ADFA00D2B158 /* Frameworks */,
+				F98923A41BB3ADFA00D2B158 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = gfserver_main;
+			productName = gfserver_main;
+			productReference = F98923A61BB3ADFA00D2B158 /* gfserver_main */;
+			productType = "com.apple.product-type.tool";
+		};
+		F98923B61BB3AEF300D2B158 /* gfclient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F98923BB1BB3AEF300D2B158 /* Build configuration list for PBXNativeTarget "gfclient" */;
+			buildPhases = (
+				F98923B31BB3AEF300D2B158 /* Sources */,
+				F98923B41BB3AEF300D2B158 /* Frameworks */,
+				F98923B51BB3AEF300D2B158 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = gfclient;
+			productName = gfclient;
+			productReference = F98923B71BB3AEF300D2B158 /* gfclient */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -92,6 +272,12 @@
 				ORGANIZATIONNAME = "Alishah Merchant";
 				TargetAttributes = {
 					F98923751BB3AD9500D2B158 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					F98923A51BB3ADFA00D2B158 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					F98923B61BB3AEF300D2B158 = {
 						CreatedOnToolsVersion = 7.0;
 					};
 				};
@@ -109,6 +295,8 @@
 			projectRoot = "";
 			targets = (
 				F98923751BB3AD9500D2B158 /* Project1 */,
+				F98923A51BB3ADFA00D2B158 /* gfserver_main */,
+				F98923B61BB3AEF300D2B158 /* gfclient */,
 			);
 		};
 /* End PBXProject section */
@@ -118,7 +306,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F989237A1BB3AD9500D2B158 /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F98923A21BB3ADFA00D2B158 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F98923AD1BB3AE5200D2B158 /* content.c in Sources */,
+				F98923AE1BB3AE5200D2B158 /* content.h in Sources */,
+				F98923AF1BB3AE5200D2B158 /* gfserver_main.c in Sources */,
+				F98923B01BB3AE5200D2B158 /* gfserver.c in Sources */,
+				F98923B11BB3AE5200D2B158 /* gfserver.h in Sources */,
+				F98923B21BB3AE5200D2B158 /* handler.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F98923B31BB3AEF300D2B158 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F98923BE1BB3AF1500D2B158 /* gfclient_download.c in Sources */,
+				F98923BF1BB3AF1500D2B158 /* gfclient.c in Sources */,
+				F98923C01BB3AF1500D2B158 /* gfclient.h in Sources */,
+				F98923C11BB3AF1500D2B158 /* workload.c in Sources */,
+				F98923C21BB3AF1500D2B158 /* workload.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +428,34 @@
 			};
 			name = Release;
 		};
+		F98923AB1BB3ADFA00D2B158 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F98923AC1BB3ADFA00D2B158 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		F98923BC1BB3AEF300D2B158 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F98923BD1BB3AEF300D2B158 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -233,6 +473,22 @@
 			buildConfigurations = (
 				F989237E1BB3AD9500D2B158 /* Debug */,
 				F989237F1BB3AD9500D2B158 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F98923AA1BB3ADFA00D2B158 /* Build configuration list for PBXNativeTarget "gfserver_main" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F98923AB1BB3ADFA00D2B158 /* Debug */,
+				F98923AC1BB3ADFA00D2B158 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F98923BB1BB3AEF300D2B158 /* Build configuration list for PBXNativeTarget "gfclient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F98923BC1BB3AEF300D2B158 /* Debug */,
+				F98923BD1BB3AEF300D2B158 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
