@@ -77,6 +77,7 @@ static void writecb(void* data, size_t data_len, void *arg){
   fwrite(data, 1, data_len, file);
 }
 
+
 /* Main ========================================================= */
 int main(int argc, char **argv) {
 /* COMMAND LINE OPTIONS ============================================= */
@@ -152,6 +153,8 @@ int main(int argc, char **argv) {
     gfc_set_port(gfr, port);
     gfc_set_writefunc(gfr, writecb);
     gfc_set_writearg(gfr, file);
+    gfc_set_headerfunc(gfr, writecb);
+    gfc_set_headerarg(gfr, openFile("header.txt"));
 
     fprintf(stdout, "Requesting %s%s\n", server, req_path);
 

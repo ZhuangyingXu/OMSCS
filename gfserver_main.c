@@ -24,7 +24,7 @@ extern ssize_t handler_get(gfcontext_t *ctx, char *path, void* arg);
 int main(int argc, char **argv) {
   int option_char = 0;
   unsigned short port = 8888;
-  char *content = "content.txt";
+  char *content = "/Users/Alishah/Dropbox (Personal)/GT OMSCS/Fall 2015/CS_8803/Project1/Project1xcode/Project1/content.txt";
   gfserver_t *gfs;
 
   // Parse and set command line arguments
