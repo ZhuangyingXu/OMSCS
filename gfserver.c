@@ -42,17 +42,28 @@ ssize_t gfs_sendheader(gfcontext_t *ctx, gfstatus_t status, size_t file_len){
 
     char filesizestring[500];
     sprintf(filesizestring, "%d", file_len);
-
-    char *header = (char *) malloc(19 + strlen(status) + strlen(filesizestring));
+    char *statusString;
+    
+    if (status == GF_OK) {
+        statusString = "OK";
+    }
+    else if (status == GF_FILE_NOT_FOUND) {
+        statusString = "FILE_NOT_FOUND";
+    }
+    else {
+        statusString = "ERROR";
+    }
+    
+    char *header = (char *) malloc(15 + strlen(statusString) + strlen(filesizestring));
     strcpy(header, "GETFILE ");
-    strcat(header, status);
+    strcat(header, statusString);
     strcat(header, " ");
     strcat(header, filesizestring);
     strcat(header, " \r\n\r\n ");
     
     ssize_t sendSize;
     sendSize = write(ctx->connectionSocket, header, strlen(header));
-
+    
     return sendSize;
 }
 
@@ -119,8 +130,8 @@ void gfserver_serve(gfserver_t *gfs){
 
         listen(listeningSocket, gfs->max_npending);
 
-        //fprintf(stderr, "listening.\n");
-        //fflush(stderr);
+        fprintf(stderr, "listening.\n");
+        fflush(stderr);
 
         connectionSocket = accept(listeningSocket, (struct sockaddr *) NULL, NULL);
         //gfs->context->listeningSocket = listeningSocket;
@@ -146,9 +157,9 @@ void gfserver_serve(gfserver_t *gfs){
         //char *filename = filenamefromclient;
 
         struct gfcontext_t *ctx = malloc(sizeof *ctx);
-        //ctx->filepath = filename;
-        //ctx->listeningSocket = listeningSocket;
-        //ctx->connectionSocket = connectionSocket;
+        ctx->filepath = filename;
+        ctx->listeningSocket = listeningSocket;
+        ctx->connectionSocket = connectionSocket;
 
         gfs->handler(ctx, filenamefromclient, gfs->handlerargument);
         /*

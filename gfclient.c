@@ -117,7 +117,7 @@ int gfc_perform(gfcrequest_t *gfr){
 
         //fprintf(stderr, "Read bytes: %d. Data: %s.\n", bytesRead, buffer);
         //fflush(stderr);
-
+        
         if (bytesRead == 0) {// We're done reading from the file
             fprintf(stderr, "Done reading.\n");
             fflush(stderr);
