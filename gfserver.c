@@ -13,7 +13,7 @@
 
 #include "gfserver.h"
 
-/* 
+/*
  * Modify this file to implement the interface specified in
  * gfserver.h.
  */
@@ -43,8 +43,11 @@ void check(char* message) {
 
 ssize_t gfs_sendheader(gfcontext_t *ctx, gfstatus_t status, size_t file_len){
     
+    fprintf(stdout, "Starting header send.\n");
+    fflush(stdout);
+    
     if (status == GF_ERROR) {
-        ssize_t sendSize = write(ctx->connectionSocket, "GETFILE ERROR \r\n\r\n", strlen("GETFILE ERROR \r\n\r\n"));
+        ssize_t sendSize = write(ctx->connectionSocket, "GETFILE ERROR \r\n\r\n", strlen("GETFILE ERROR \r\n\r\n") + 1);
         fprintf(stdout, "GETFILE ERROR \r\n\r\n");
         fflush(stdout);
         gfs_abort(ctx);
@@ -52,12 +55,15 @@ ssize_t gfs_sendheader(gfcontext_t *ctx, gfstatus_t status, size_t file_len){
     }
     
     if (status == GF_FILE_NOT_FOUND) {
-        ssize_t sendSize = write(ctx->connectionSocket, "GETFILE FILE_NOT_FOUND \r\n\r\n", strlen("GETFILE FILE_NOT_FOUND \r\n\r\n"));
+        ssize_t sendSize = write(ctx->connectionSocket, "GETFILE FILE_NOT_FOUND \r\n\r\n", strlen("GETFILE FILE_NOT_FOUND \r\n\r\n") + 1);
         fprintf(stdout, "GETFILE FILE_NOT_FOUND \r\n\r\n");
         fflush(stdout);
         gfs_abort(ctx);
         return sendSize;
     }
+    
+    fprintf(stdout, "Assumed status OK.\n");
+    fflush(stdout);
     
     char filesizestring[500];
     sprintf(filesizestring, "%zu", file_len);
@@ -89,8 +95,9 @@ ssize_t gfs_send(gfcontext_t *ctx, void *data, size_t len){
 void gfs_abort(gfcontext_t *ctx){
     fprintf(stdout, "Abort Called.\n");
     fflush(stdout);
-
+    
     close(ctx->connectionSocket);
+    //close(ctx->listeningSocket);
 }
 
 gfserver_t* gfserver_create(){
@@ -120,31 +127,32 @@ void gfserver_serve(gfserver_t *gfs){
     struct sockaddr_in clientSocketAddress;
     char *readData = "";
     ssize_t readDataSize = BUFSIZE;
-
+    
     readData = (char*) malloc(BUFSIZE);
-
+    
     while(1) {
         listeningSocket = socket(AF_INET, SOCK_STREAM, 0);
-
+        
         setsockopt(listeningSocket, SOL_SOCKET, SO_REUSEADDR, &set_reuse_addr, sizeof(set_reuse_addr));
-
+        
         memset(&clientSocketAddress, '0', sizeof(clientSocketAddress));
-
+        
         clientSocketAddress.sin_family = AF_INET;
         clientSocketAddress.sin_addr.s_addr = htonl(INADDR_ANY);
         clientSocketAddress.sin_port = htons(gfs->port);
-
+        
         bind(listeningSocket, (struct sockaddr *) &clientSocketAddress, sizeof(clientSocketAddress));
-
+        
         listen(listeningSocket, gfs->max_npending);
-
+        
         fprintf(stderr, "listening.\n");
         fflush(stderr);
-
+        
         connectionSocket = accept(listeningSocket, (struct sockaddr *) NULL, NULL);
-
+        
         fprintf(stderr, "connected.\n");
         fflush(stderr);
+        
         
         readDataSize = recv(connectionSocket, readData, BUFSIZE, 0);
         
@@ -164,7 +172,9 @@ void gfserver_serve(gfserver_t *gfs){
         
         char filename = *filenamefromclient;
         
-        if (strcmp(scheme, "GETFILE") != 0 || strcmp(request, "GET") != 0 || filename != '/') {
+        if (scheme == NULL || request == NULL || filename == NULL) {
+            fprintf(stdout, "Here.\n");
+            fflush(stdout);
             char *statusString = "FILE_NOT_FOUND";
             
             char *header = (char *) malloc(13 + strlen(statusString) + 1);
@@ -172,16 +182,26 @@ void gfserver_serve(gfserver_t *gfs){
             strcat(header, statusString);
             strcat(header, " \r\n\r\n");
             
-            fprintf(stdout, "Sending header: %s. \n", header);
+            write(ctx->connectionSocket, header, strlen(header));
+        }
+        else if (strcmp(scheme, "GETFILE") != 0 || strcmp(request, "GET") != 0 || filename != '/') {
+            fprintf(stdout, "Here instead.\n");
             fflush(stdout);
+            char *statusString = "FILE_NOT_FOUND";
+            
+            char *header = (char *) malloc(13 + strlen(statusString) + 1);
+            strcpy(header, "GETFILE ");
+            strcat(header, statusString);
+            strcat(header, " \r\n\r\n");
             
             write(ctx->connectionSocket, header, strlen(header));
         }
         else {
-            gfs->handler(ctx, filenamefromclient, gfs->handlerargument);
-            fprintf(stdout, "Sending to file. Filename: %s.\n", filenamefromclient);
+            fprintf(stdout, "referencing header send.\n");
             fflush(stdout);
+            gfs->handler(ctx, filenamefromclient, gfs->handlerargument);
         }
+        
+        fprintf(stdout, "Scheme: %s. Request: %s. Filename: %s\n.", scheme, request, filenamefromclient);
     }
 }
-
