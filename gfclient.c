@@ -19,8 +19,10 @@ struct gfcrequest_t  {
     unsigned short port;
     gfstatus_t status;
     char *statusText;
-    size_t *bytesreceived;
-    size_t *filelength;
+    size_t bytesreceived;
+    size_t bytesOfFileReceived;
+    size_t filelength;
+    char *filelengthstring;
     void *writerargument;
     void *headerargument;
     void *chunk;
@@ -70,17 +72,12 @@ int gfc_perform(gfcrequest_t *gfr){
     struct sockaddr_in serverSocketAddress;
     char receivedData[BUFSIZE];
     memset(receivedData, '0', sizeof(receivedData));
-    size_t readSize;
-    size_t writeSize;
     char *fullData = "";
     int set_reuse_addr = 1;
-    //struct timeval timeout;
-    //timeout.tv_sec = 3;
-    //timeout.tv_usec = 5000;
+    int headerComplete = 0;
 
     clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 
-    //setsockopt(clientSocket, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
     setsockopt(clientSocket, SOL_SOCKET, SO_REUSEADDR, &set_reuse_addr, sizeof(set_reuse_addr));
 
     struct hostent *he = gethostbyname(gfr->server);
@@ -98,158 +95,128 @@ int gfc_perform(gfcrequest_t *gfr){
     strcat(message, gfr->path);
     strcat(message, " \r\n\r\n");
 
-    //TODO send in bytes and track
-
     send(clientSocket, message, strlen(message), 0);
 
     fprintf(stdout, "Wrote: %s.\n", message);
     fflush(stdout);
 
     char buffer[BUFSIZE];
-    int bytesTotal = 0;
+    size_t bytesTotal = 0;
+    size_t bytesTotalOfFile = 0;
 
     while (1) {
-        //fprintf(stderr, "Attempting read");
-        //fflush(stderr);
-
-        int bytesRead = recv(clientSocket, buffer, BUFSIZE, 0);
-        bytesTotal = bytesTotal + bytesRead;
-
-        //fprintf(stderr, "Read bytes: %d. Data: %s.\n", bytesRead, buffer);
-        //fflush(stderr);
+        size_t bytesRead = recv(clientSocket, buffer, BUFSIZE, 0);
         
-        if (bytesRead == 0) {// We're done reading from the file
-            fprintf(stderr, "Done reading.\n");
-            fflush(stderr);
-
+        bytesTotal = bytesTotal + bytesRead;
+        gfr->bytesreceived = bytesTotal;
+        
+        if (bytesRead < 0) {
+            return -1;
+        }
+        
+        char * finalData = (char *) malloc(bytesTotal + 1);
+        strcpy(finalData, fullData);
+        strcat(finalData, buffer);
+        
+        fullData = finalData;
+        
+        char * dataForAnalysis = (char *) malloc(strlen(finalData));
+        strcpy(dataForAnalysis, finalData);
+        
+        if (bytesTotal > 7) {
+            char *scheme = strtok(dataForAnalysis, " ");
+            if (strcmp(scheme, "GETFILE") != 0) {
+                gfr->statusText = "INVALID";
+                gfr->status = gfc_get_status(gfr);
+                gfr->bytesOfFileReceived = bytesTotal;
+                return -1;
+            }
+            
+            if (bytesTotal > 10) {
+                char *statusText = strtok(NULL, " \r\n");
+                if (strcmp(statusText, "OK") != 0) {
+                    if (strcmp(statusText, "FILE_NOT_FOUND") == 0) {
+                        gfr->statusText = statusText;
+                        gfr->status = gfc_get_status(gfr);
+                        if (gfr->headerargument != NULL) {
+                            gfr->headerfunc("GETFILE FILE_NOT_FOUND", strlen("GETFILE FILE_NOT_FOUND"), gfr->headerargument);
+                        }
+                        return 0;
+                    }
+                    if (strcmp(statusText, "ERROR") == 0) {
+                        gfr->statusText = statusText;
+                        gfr->status = gfc_get_status(gfr);
+                        if (gfr->headerargument != NULL) {
+                            gfr->headerfunc("GETFILE ERROR", strlen("GETFILE ERROR"), gfr->headerargument);
+                        }
+                        return 0;
+                    }
+                }
+                else {
+                    gfr->statusText = statusText;
+                    gfr->status = gfc_get_status(gfr);
+                    
+                    char *everythingAfterStatus = strtok(NULL, "");
+                    
+                    size_t fileContentsAndFileLengthString = strlen(everythingAfterStatus);
+                    
+                    char *filelength = strtok(everythingAfterStatus, " \r\n");
+                    
+                    if((strlen(filelength) + 4) <= fileContentsAndFileLengthString) {
+                        gfr->filelengthstring = filelength;
+                        gfr->filelength = atol(filelength);
+                        bytesTotalOfFile = strlen(strtok(NULL, "")) - 3;
+                        gfr->bytesOfFileReceived = bytesTotalOfFile;
+                        headerComplete = 1;
+                    }
+                }
+            }
+        }
+        
+        if (headerComplete == 1 && bytesTotalOfFile >= (long)gfr->filelength) {
             char *scheme = strtok(fullData, " ");
-
-            //fprintf(stdout, "Isolated scheme: %s.\n", scheme);
-            //fflush(stdout);
-
+            
             char *statusText = strtok(NULL, " ");
             gfr->statusText = statusText;
             gfr->status = gfc_get_status(gfr);
-
-            //fprintf(stdout, "Isolated status: %s.\n", statusText);
-            //fflush(stdout);
-
+            
             if (strncmp(statusText, "OK", strlen("OK")) == 0) {
-                //fprintf(stdout, "OK'd.\n");
-                //fflush(stdout);
-
-                char *filelength = strtok(NULL, " ");
+                char *filelength = strtok(NULL, "\n");
                 gfr->filelength = atol(filelength);
-
-                fprintf(stdout, "Isolated file length. File Length: %d.\n", gfr->filelength);
-                fflush(stdout);
-
-                char *endofmarker = strtok(NULL, " ");
-
-                //fprintf(stdout, "Isolated end of marker. End of Marker: %s.\n", endofmarker);
-                //fflush(stdout);
-
+                
+                char *waste1 = strtok(NULL, "\n");
+                
                 char *fileContent = strtok(NULL, "");
+                
                 gfr->fileContent = fileContent;
-
-                //fprintf(stdout, "Isolated file content. File Content: %s.\n", gfr->fileContent);
-                //fflush(stdout);
-
-                gfr->bytesreceived = bytesTotal;
-
-                //fprintf(stdout, "Bytes Received: %d.\n", gfr->bytesreceived);
-                //fflush(stdout);
-
-                bytesTotal = bytesTotal - 8 - strlen(statusText) - 1 - strlen(filelength) - 1 - 5; //Account for header
-                gfr->chunklength = bytesTotal;
-
-                //fprintf(stdout, "Content Bytes: %d.\n", gfr->chunklength);
-                //fflush(stdout);
-
-                //gfr->chunk = fileContent;
-                //gfr->chunklength = bytesTotal;
-
-                gfr->writerfunc(gfr->fileContent, fileContent, gfr->writerargument);
-
-                //fprintf(stdout, "Wrote to writer function:\nFile Content: %s.\n\n\nBytes Total: %d.\n\n\nWriter Argument: %s.\n", gfr->fileContent, gfr->filelength, gfr->writerargument);
-                //fflush(stdout);
-
-                //fprintf(stdout, "Check1\n");
-                //fflush(stdout);
-
+                
+                gfr->writerfunc(gfr->fileContent, gfr->filelength, gfr->writerargument);
+                
                 char *header = (char *) malloc(strlen(scheme) + 1 + strlen(statusText) + 1 + strlen(filelength) + 9);
-                strcpy(header, scheme);
-                strcat(header, " ");
-                strcat(header, statusText);
-
-                strcat(header, " ");
-                strcat(header, filelength);
-                strcat(header, " \r\n\r\n ");
-
-                //fprintf(stdout, "Check2\n");
-                //fflush(stdout);
-
+                strcpy(header, "GETFILE OK ");
+                strcat(header, gfr->filelengthstring);
+                strcat(header, " \r\n\r\n");
+                
                 gfr->header = header;
-
-                //fprintf(stdout, "Check3\n");
-                //fflush(stdout);
-
+                
                 gfr->headerlength = strlen(header);
-
-                //fprintf(stdout, "Check4. %d.\n", gfr->headerlength);
-                //fflush(stdout);
-
+                
                 if (gfr->headerargument != NULL) {
                     gfr->headerfunc(gfr->header, gfr->headerlength, gfr->headerargument);
                 }
-
-                //fprintf(stdout, "Wrote to header\n");
-                //fflush(stdout);
-
-                //fprintf(stdout, "Wrote to header function:\nHeader Content: %s.\n\n\nBytes Total: %d.\n\n\nHeader Argument: %s.\n", gfr->header, gfr->headerlength, gfr->headerargument);
-                //fflush(stdout);
-
-                return 0;
-            }
-            else {
-                gfr->filelength = 0;
-                gfr->fileContent = "";
-                gfr->bytesreceived = 0;
-
-                //gfr->chunk = "";
-                //gfr->chunklength = 0;
-
-                char *header = (char *) malloc(strlen(scheme) + 1 + strlen(statusText) + 1 + 9);
-                strcpy(header, scheme);
-                strcat(header, " ");
-                strcat(header, statusText);
-                strcat(header, " ");
-                strcat(header, "\r\n\r\n");
+                
                 return 0;
             }
         }
-        if (bytesRead < 0) {
-            fprintf(stdout, "Couldn't read. Breaking.\n");
-            fflush(stdout);
-
-            gfr->statusText = "ERROR";
+        
+        if (bytesRead == 0) {
+            char *scheme = strtok(fullData, " ");
+            char *statusText = strtok(NULL, " \r\n");
+            gfr->statusText = statusText;
             gfr->status = gfc_get_status(gfr);
-            gfr->filelength = 0;
-            gfr->fileContent = "";
-            gfr->bytesreceived = 0;
-
-            //gfr->chunk = "";
-            //gfr->chunklength = 0;
-
-            char *header = "GETFILE ERROR 0 \r\n\r\n";
+            gfr->bytesOfFileReceived = bytesTotal;
             return -1;
         }
-
-        char * finalData = (char *) malloc(strlen(fullData) + sizeof(buffer));
-        strcpy(finalData, fullData);
-        strcat(finalData, buffer);
-
-        fullData = finalData;
     }
 }
 
@@ -297,11 +264,13 @@ size_t gfc_get_filelen(gfcrequest_t *gfr){
 }
 
 size_t gfc_get_bytesreceived(gfcrequest_t *gfr){
-    return gfr->chunklength;
+    fprintf(stdout, "Bytes received returned: %zu.\n", gfr->bytesOfFileReceived);
+    fflush(stdout);
+    
+    return gfr->bytesOfFileReceived;
 }
 
 void gfc_cleanup(gfcrequest_t *gfr){
-    free(gfr);
 }
 
 
