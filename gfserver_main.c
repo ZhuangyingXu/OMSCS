@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
   }
   
   content_init(content);
-
+    
   /*Initializing server*/
   gfs = gfserver_create();
 

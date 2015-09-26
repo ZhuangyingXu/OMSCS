@@ -146,10 +146,10 @@ void gfserver_serve(gfserver_t *gfs){
         fprintf(stderr, "connected.\n");
         fflush(stderr);
         
-        
         readDataSize = recv(connectionSocket, readData, BUFSIZE, 0);
         
         fprintf(stdout, "Received: %s.\n", readData);
+        fflush(stdout);
         
         char *scheme = strtok(readData, " ");
         
@@ -172,13 +172,16 @@ void gfserver_serve(gfserver_t *gfs){
             strcat(header, statusString);
             strcat(header, " \r\n\r\n");
             
+            fprintf(stdout, "Sending header: %s. \n", header);
+            fflush(stdout);
+            
             write(ctx->connectionSocket, header, strlen(header));
         }
         else {
             gfs->handler(ctx, filenamefromclient, gfs->handlerargument);
+            fprintf(stdout, "Sending to file. Filename: %s.\n", filenamefromclient);
+            fflush(stdout);
         }
-        
-        fprintf(stdout, "Scheme: %s. Request: %s. Filename: %s\n.", scheme, request, filenamefromclient);
     }
 }
 

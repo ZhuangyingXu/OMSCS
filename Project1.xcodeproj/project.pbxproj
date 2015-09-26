@@ -475,6 +475,7 @@
 				F989237F1BB3AD9500D2B158 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F98923AA1BB3ADFA00D2B158 /* Build configuration list for PBXNativeTarget "gfserver_main" */ = {
 			isa = XCConfigurationList;
@@ -483,6 +484,7 @@
 				F98923AC1BB3ADFA00D2B158 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F98923BB1BB3AEF300D2B158 /* Build configuration list for PBXNativeTarget "gfclient" */ = {
 			isa = XCConfigurationList;
@@ -491,6 +493,7 @@
 				F98923BD1BB3AEF300D2B158 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
