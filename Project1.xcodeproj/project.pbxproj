@@ -18,6 +18,11 @@
 		F98923C01BB3AF1500D2B158 /* gfclient.h in Sources */ = {isa = PBXBuildFile; fileRef = F989238B1BB3ADD100D2B158 /* gfclient.h */; };
 		F98923C11BB3AF1500D2B158 /* workload.c in Sources */ = {isa = PBXBuildFile; fileRef = F989239F1BB3ADD100D2B158 /* workload.c */; };
 		F98923C21BB3AF1500D2B158 /* workload.h in Sources */ = {isa = PBXBuildFile; fileRef = F98923A01BB3ADD100D2B158 /* workload.h */; };
+		F98F1FC61BB7734900B387AF /* steque.c in Sources */ = {isa = PBXBuildFile; fileRef = F98F1FC41BB7734900B387AF /* steque.c */; settings = {ASSET_TAGS = (); }; };
+		F98F1FC71BB7734900B387AF /* steque.c in Sources */ = {isa = PBXBuildFile; fileRef = F98F1FC41BB7734900B387AF /* steque.c */; settings = {ASSET_TAGS = (); }; };
+		F98F1FC81BB7734900B387AF /* steque.c in Sources */ = {isa = PBXBuildFile; fileRef = F98F1FC41BB7734900B387AF /* steque.c */; settings = {ASSET_TAGS = (); }; };
+		F98F1FC91BB7748300B387AF /* steque.h in Sources */ = {isa = PBXBuildFile; fileRef = F98F1FC51BB7734900B387AF /* steque.h */; };
+		F98F1FCA1BB7748900B387AF /* steque.h in Sources */ = {isa = PBXBuildFile; fileRef = F98F1FC51BB7734900B387AF /* steque.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -81,6 +86,8 @@
 		F98923A11BB3ADD100D2B158 /* workload.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = workload.txt; sourceTree = "<group>"; };
 		F98923A61BB3ADFA00D2B158 /* gfserver_main */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gfserver_main; sourceTree = BUILT_PRODUCTS_DIR; };
 		F98923B71BB3AEF300D2B158 /* gfclient */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gfclient; sourceTree = BUILT_PRODUCTS_DIR; };
+		F98F1FC41BB7734900B387AF /* steque.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = steque.c; sourceTree = "<group>"; };
+		F98F1FC51BB7734900B387AF /* steque.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = steque.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +118,8 @@
 		F989236D1BB3AD9500D2B158 = {
 			isa = PBXGroup;
 			children = (
+				F98F1FC41BB7734900B387AF /* steque.c */,
+				F98F1FC51BB7734900B387AF /* steque.h */,
 				F98923801BB3ADD100D2B158 /* content.c */,
 				F98923811BB3ADD100D2B158 /* content.h */,
 				F98923821BB3ADD100D2B158 /* content.txt */,
@@ -306,6 +315,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F98F1FC61BB7734900B387AF /* steque.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,12 +323,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F98F1FCA1BB7748900B387AF /* steque.h in Sources */,
 				F98923AD1BB3AE5200D2B158 /* content.c in Sources */,
 				F98923AE1BB3AE5200D2B158 /* content.h in Sources */,
 				F98923AF1BB3AE5200D2B158 /* gfserver_main.c in Sources */,
 				F98923B01BB3AE5200D2B158 /* gfserver.c in Sources */,
 				F98923B11BB3AE5200D2B158 /* gfserver.h in Sources */,
 				F98923B21BB3AE5200D2B158 /* handler.c in Sources */,
+				F98F1FC71BB7734900B387AF /* steque.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +338,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F98F1FC91BB7748300B387AF /* steque.h in Sources */,
+				F98F1FC81BB7734900B387AF /* steque.c in Sources */,
 				F98923BE1BB3AF1500D2B158 /* gfclient_download.c in Sources */,
 				F98923BF1BB3AF1500D2B158 /* gfclient.c in Sources */,
 				F98923C01BB3AF1500D2B158 /* gfclient.h in Sources */,
